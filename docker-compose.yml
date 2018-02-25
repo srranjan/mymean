@@ -1,0 +1,22 @@
+version: "2"
+services:
+  mymongo:
+    image: docker.io/mongo:latest
+    container_name: mymongo
+    ports: 
+      - "27017:27017"
+    networks:
+      - mydockernet
+  core:
+    image: rajiv/mynodewebapp:latest
+    container_name: mynodewebapp
+    depends_on:
+      - mymongo
+    environment:
+    - myMongoHOST=mymongo
+    ports:
+      - "7071:7071"
+    networks:
+      - mydockernet
+networks:
+   mydockernet:
